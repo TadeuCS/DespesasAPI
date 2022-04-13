@@ -3,6 +3,8 @@ package br.com.tcs.despesasapi.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,18 @@ public class HistoricoService {
             e.printStackTrace();
             throw e;
         }
+    }
+
+    public HistoricoModel findOne(String id) {
+        return null;
+    }
+
+    public HistoricoModel update(@Valid HistoricoModel model) {
+        return null;
+    }
+
+    public HistoricoModel delete(String id) {
+        return null;
     }
 
     
