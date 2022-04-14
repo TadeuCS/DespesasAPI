@@ -1,14 +1,14 @@
 package br.com.tcs.despesasapi.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.tcs.despesasapi.entities.HistoricoEnity;
+import br.com.tcs.despesasapi.errors.DomainException;
 import br.com.tcs.despesasapi.mappers.HistoricoMapper;
 import br.com.tcs.despesasapi.models.HistoricoModel;
 import br.com.tcs.despesasapi.repositories.HistoricoJPARepository;
@@ -31,7 +31,6 @@ public class HistoricoService {
             .collect(Collectors.toList());
             return models;
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         }
     }
@@ -41,22 +40,34 @@ public class HistoricoService {
             HistoricoEnity entity = repository.save(mapper.convertToEntity(model));
             return mapper.convertToModel(entity);
         } catch (Exception e) {
-            e.printStackTrace();
             throw e;
         }
     }
 
-    public HistoricoModel findOne(String id) {
-        return null;
+    public HistoricoModel findOne(Integer id) throws Exception{
+        try {
+            Optional<HistoricoEnity> entity = repository.findById(id);
+            return mapper.convertToModel(entity.orElseThrow(() -> new DomainException("Não foi encontrado um Histórico com esse ID")));
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    public HistoricoModel update(@Valid HistoricoModel model) {
-        return null;
+    public HistoricoModel updateHistorico(HistoricoModel model) {
+        try {
+            HistoricoEnity entity = repository.save(mapper.convertToEntity(model));
+            return mapper.convertToModel(entity);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    public HistoricoModel delete(String id) {
-        return null;
+    public void delete(Integer id) throws Exception{
+        try {
+            repository.deleteById(id);
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
-    
 }

@@ -1,26 +1,40 @@
-# Use root/example as user/password credentials
-version: '3.1'
+version: '3.9'
 
 services:
+  despesas-api:
+    container_name: Despesas-API
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: despesas-api
+    ports:
+      - '80:8080'
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+
   mariadb:
-    image: mariadb
-    container_name: MariaDB
+    image: "mariadb"
+    container_name: "MariaDB"
     restart: always
     environment:
-      MARIADB_ROOT_PASSWORD: mutkch
+      - MARIADB_ROOT_HOST= "%"
+      - MARIADB_ROOT_PASSWORD= "root"
+      - MARIADB_DATABASE= "imc"
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./base/mariadb/data:/var/lib/mysql
 
-  mongodb:
-    image: mongo
-    container_name: MongoDB
-    restart: always
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: mutkch
-    ports:
-      - 27017:27017
-    volumes:
-      - ./base/mongodb/data:/data/db
+  # mongodb:
+  #   image: mongo
+  #   container_name: MongoDB
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: mutkch
+  #   ports:
+  #     - 27017:27017
+  #   volumes:
+  #     - ./base/mongodb/data:/data/db

@@ -13,7 +13,7 @@ public class HistoricoModel {
     @JsonProperty("id")
     private Integer codigo;
 
-    @NotNull(message = "O atributo \"status\" n„o pode ser null")
+    @NotNull(message = "O atributo \"status\" n√£o pode ser null")
     @JsonProperty("status")
     private String status;
     @JsonProperty("data_hora")

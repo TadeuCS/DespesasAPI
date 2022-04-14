@@ -13,13 +13,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tcs.despesasapi.errors.DomainException;
 import br.com.tcs.despesasapi.models.HistoricoModel;
 import br.com.tcs.despesasapi.services.HistoricoService;
 
-@RestController("/historico")
+@RestController
+@RequestMapping("/historico")
 public class HistoricoController {
 
     @Autowired
@@ -27,7 +29,7 @@ public class HistoricoController {
     
     
 
-    @GetMapping("/")
+    @GetMapping
     public ResponseEntity<List<HistoricoModel>> list(){
         try{
             List<HistoricoModel> findAll = service.findAll();
@@ -40,7 +42,7 @@ public class HistoricoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> find(@PathVariable String id) {
+    public ResponseEntity<?> find(@PathVariable Integer id) {
         try{
             HistoricoModel model = service.findOne(id);
             return ResponseEntity.ok().body(model);
@@ -67,7 +69,7 @@ public class HistoricoController {
     @PutMapping("/")
     public ResponseEntity<?> update(@RequestBody @Valid HistoricoModel model){
         try{
-            HistoricoModel modelSaved = service.update(model);
+            HistoricoModel modelSaved = service.save(model);
             return ResponseEntity.status(HttpStatus.OK).body(modelSaved);
         }catch(DomainException d){
             return new ResponseEntity<String>(d.getMessage(), HttpStatus.BAD_REQUEST);
@@ -76,8 +78,9 @@ public class HistoricoController {
             return ResponseEntity.internalServerError().build();
         }
     }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
+    public ResponseEntity<?> delete(@PathVariable Integer id) {
         try{
             service.delete(id);
             return ResponseEntity.status(HttpStatus.OK).build();

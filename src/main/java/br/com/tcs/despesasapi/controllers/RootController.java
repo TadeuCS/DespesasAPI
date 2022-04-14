@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.tcs.despesasapi.errors.DomainException;
 
-@RestController("/")
+@RestController
 public class RootController {
     @GetMapping
     public ResponseEntity<String> sayHello(){
