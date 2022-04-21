@@ -1,4 +1,4 @@
-package br.com.tcs.despesasapi.controllers;
+package br.com.tcs.despesasapi.features.historico.presenter.controllers;
 
 import java.util.List;
 
@@ -16,18 +16,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tcs.despesasapi.errors.DomainException;
-import br.com.tcs.despesasapi.models.HistoricoModel;
-import br.com.tcs.despesasapi.services.HistoricoService;
+import br.com.tcs.despesasapi.core.errors.DomainException;
+import br.com.tcs.despesasapi.features.historico.domain.models.HistoricoModel;
+import br.com.tcs.despesasapi.features.historico.presenter.services.IHistoricoService;
 
 @RestController
 @RequestMapping("/historico")
 public class HistoricoController {
 
     @Autowired
-    private HistoricoService service;
+    private IHistoricoService service;
     
-    
+    public HistoricoController(IHistoricoService service){
+        this.service = service;
+    }
 
     @GetMapping
     public ResponseEntity<List<HistoricoModel>> list(){
@@ -44,7 +46,7 @@ public class HistoricoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> find(@PathVariable Integer id) {
         try{
-            HistoricoModel model = service.findOne(id);
+            HistoricoModel model = service.findOne(id.toString());
             return ResponseEntity.ok().body(model);
         }catch(DomainException d){
             return new ResponseEntity<String>(d.getMessage(), HttpStatus.BAD_REQUEST);
@@ -82,7 +84,7 @@ public class HistoricoController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Integer id) {
         try{
-            service.delete(id);
+            service.delete(id.toString());
             return ResponseEntity.status(HttpStatus.OK).build();
         }catch(DomainException d){
             return new ResponseEntity<String>(d.getMessage(), HttpStatus.BAD_REQUEST);

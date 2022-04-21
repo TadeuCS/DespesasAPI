@@ -1,11 +1,12 @@
-package br.com.tcs.despesasapi.controllers;
+package br.com.tcs.despesasapi.features.historico.presenter.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.tcs.despesasapi.errors.DomainException;
+import br.com.tcs.despesasapi.core.errors.DomainException;
+
 
 @RestController
 public class RootController {

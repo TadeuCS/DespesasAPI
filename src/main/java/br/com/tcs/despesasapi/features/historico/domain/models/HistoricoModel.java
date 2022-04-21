@@ -1,4 +1,4 @@
-package br.com.tcs.despesasapi.models;
+package br.com.tcs.despesasapi.features.historico.domain.models;
 
 import java.util.Date;
 
@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class HistoricoModel {
 
     @JsonProperty("id")
-    private Integer codigo;
+    private String codigo;
 
     @NotNull(message = "O atributo \"status\" não pode ser null")
     @JsonProperty("status")
@@ -21,11 +21,11 @@ public class HistoricoModel {
 
     public HistoricoModel(){}
 
-    public Integer getCodigo() {
+    public String getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(Integer codigo) {
+    public void setCodigo(String codigo) {
         this.codigo = codigo;
     }
 

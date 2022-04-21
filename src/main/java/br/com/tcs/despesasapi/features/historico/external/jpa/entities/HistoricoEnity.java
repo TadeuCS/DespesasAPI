@@ -1,4 +1,4 @@
-package br.com.tcs.despesasapi.entities;
+package br.com.tcs.despesasapi.features.historico.external.jpa.entities;
 
 import java.util.Date;
 
